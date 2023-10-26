@@ -1,9 +1,43 @@
+import { collection, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../firebase-config";
+
 export default function ContactPage() {
+    const [tekster, setTekster] = useState([]);
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        async function fetchData() {
+            onSnapshot(collection(db, "tekst"), data => {
+                const docs = [];
+                data.forEach((doc) => {
+                    docs.push({ id: doc.id, ...doc.data() });
+                });
+                console.log("useEffect");
+
+                setTekster(docs);
+            });
+        }
+        fetchData();
+
+        const tempEmail = sessionStorage.getItem("email");
+        setEmail(tempEmail);
+
+    }, []);
+
+    // Jeg opretter en sorteret dataliste som jeg viser til brugeren.
+    const personligeTekster = tekster.filter(tekst => tekst.email === email);
+    // console.log(personligeTekster);
+
     return (
-        <section className="page">
-            <h1>Contact Page</h1>
-            <p>Get in touch, or swing by for a cup of coffee ☕️</p>
-            <p>I am one arm away 🤷🏼‍♂️</p>
+        <section className="page" style={{ marginTop: "25px" }}>
+            {personligeTekster.map(tekst => (
+                <p key={tekst.id}>
+                    {tekst.tekst}
+                    <hr />
+                </p>
+            ))}
+
         </section>
     );
 }
