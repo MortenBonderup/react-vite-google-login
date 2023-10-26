@@ -25,7 +25,7 @@ export default function ContactPage() {
 
     }, []);
 
-    // Jeg opretter en personlig tekstliste som jeg viser til brugeren.
+    // Jeg opretter jeg en personlig tekstliste som jeg viser til brugeren.
     const personligeTekster = tekster.filter(tekst => tekst.uid === uid);
 
     return (
