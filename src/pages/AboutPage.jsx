@@ -5,24 +5,25 @@ import { db } from "../firebase-config";
 export default function AboutPage() {
 
     const [tekst, setTekst] = useState("");
-    const [email, setEmail] = useState("");
+    const [uid, setUid] = useState("");
 
     useEffect(() => {
-        const email = sessionStorage.getItem("email");
-        setEmail(email);
+        const tempUid = sessionStorage.getItem("uid");
+        setUid(tempUid);
     }, []);
 
     async function opretVare(e) {
         e.preventDefault();
 
         const nytekst = {
-            email: email,
+            uid: uid,
             tekst: tekst
         }
 
         try {
             const tekstRef = await addDoc(collection(db, "tekst"), nytekst);
             console.log("Tekst tilføjet med ID: ", tekstRef.id);
+            alert("Tekst blev gemt!");
         } catch (e) {
             console.error("FEJL - Kunne ikke tilføje vare: ", e);
         }

@@ -25,11 +25,17 @@ const provider = new GoogleAuthProvider();
 
 export function signInWithGoogle() {
     signInWithPopup(auth, provider).then((result) => {
+        
+        const uid = result.user.uid;
+        sessionStorage.setItem("uid", uid)
+
+        /* 
         const name = result.user.displayName;
         const email = result.user.email;
-
         sessionStorage.setItem("brugernavn", name);
         sessionStorage.setItem("email", email);
+        */
+        
     }).catch((error) => {
         alert("Du er ikke logget på: "+error)
     })

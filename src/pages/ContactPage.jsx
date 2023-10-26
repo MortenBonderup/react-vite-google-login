@@ -4,7 +4,7 @@ import { db } from "../firebase-config";
 
 export default function ContactPage() {
     const [tekster, setTekster] = useState([]);
-    const [email, setEmail] = useState("");
+    const [uid, setUid] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -20,20 +20,20 @@ export default function ContactPage() {
         }
         fetchData();
 
-        const tempEmail = sessionStorage.getItem("email");
-        setEmail(tempEmail);
+        const tempUid = sessionStorage.getItem("uid");
+        setUid(tempUid);
 
     }, []);
 
     // Jeg opretter en personlig tekstliste som jeg viser til brugeren.
-    const personligeTekster = tekster.filter(tekst => tekst.email === email);
-    
+    const personligeTekster = tekster.filter(tekst => tekst.uid === uid);
+
     return (
         <section className="page" style={{ marginTop: "25px" }}>
             {personligeTekster.map(tekst => (
                 <p key={tekst.id}>
                     {tekst.tekst}
-                    <hr />
+                    <br />--------------------------------------
                 </p>
             ))}
 
