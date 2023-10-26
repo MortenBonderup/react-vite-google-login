@@ -25,7 +25,7 @@ export default function ContactPage() {
 
     }, []);
 
-    // Jeg opretter jeg en personlig tekstliste som jeg viser til brugeren.
+    // Her opretter jeg en personlig tekstliste som jeg viser til brugeren. Teksten vises kun hvis den tilhørende uid er lig med uid på den bruger som er logget på.
     const personligeTekster = tekster.filter(tekst => tekst.uid === uid);
 
     return (
