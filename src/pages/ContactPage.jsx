@@ -25,10 +25,9 @@ export default function ContactPage() {
 
     }, []);
 
-    // Jeg opretter en sorteret dataliste som jeg viser til brugeren.
+    // Jeg opretter en personlig tekstliste som jeg viser til brugeren.
     const personligeTekster = tekster.filter(tekst => tekst.email === email);
-    // console.log(personligeTekster);
-
+    
     return (
         <section className="page" style={{ marginTop: "25px" }}>
             {personligeTekster.map(tekst => (
