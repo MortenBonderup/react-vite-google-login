@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase-config";
 
@@ -8,29 +8,26 @@ export default function ContactPage() {
 
     useEffect(() => {
         async function fetchData() {
-            onSnapshot(collection(db, "tekst"), data => {
-                const docs = [];
-                data.forEach((doc) => {
-                    docs.push({ id: doc.id, ...doc.data() });
-                });
-                console.log("useEffect");
-
-                setTekster(docs);
+            const forespoergsel = query(collection(db, "tekst"), where("uid", "==", uid));
+            const querySnapshot = await getDocs(forespoergsel);
+            const docs = [];
+            querySnapshot.forEach((doc) => {
+                docs.push({ id: doc.id, ...doc.data() });
             });
-        }
-        fetchData();
+            console.log("useEffect");
 
+            setTekster(docs);
+        }
         const tempUid = sessionStorage.getItem("uid");
         setUid(tempUid);
 
-    }, []);
+        fetchData();
 
-    // Her opretter jeg en personlig tekstliste som jeg viser til brugeren. Teksten vises kun hvis den tilhørende uid er lig med uid på den bruger som er logget på.
-    const personligeTekster = tekster.filter(tekst => tekst.uid === uid);
+    }, [uid]);
 
     return (
         <section className="page" style={{ marginTop: "25px" }}>
-            {personligeTekster.map(tekst => (
+            {tekster.map(tekst => (
                 <p key={tekst.id}>
                     {tekst.tekst}
                     <br />--------------------------------------
