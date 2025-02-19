@@ -1,22 +1,33 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Nav from "./components/Nav";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "./views/HomePage";
+import UserPage from "./views/UserPage";
+import AdminPage from "./views/AdminPage";
+import Layout from "./Layout";
+
+const router = createBrowserRouter([
+    {
+        path: "/react-vite-google-login/",
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: <HomePage />,
+            },
+            {
+                path: "user",
+                element: <UserPage />,
+            },
+            {
+                path: "admin",
+                element: <AdminPage />,
+            },
+        ],
+    },
+]);
 
 function App() {
     return (
-        <>
-            <Nav />
-            <main>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </main>
-        </>
+        <RouterProvider router={router} />
     );
 }
 
