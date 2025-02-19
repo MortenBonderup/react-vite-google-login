@@ -12,7 +12,7 @@ export default function HomePage() {
             console.log(result.user.email);
 
             // Redirect to a special place after successful login
-            navigate("/user"); // Change this to your desired URL
+            navigate("/react-vite-google-login/user"); // Change this to your desired URL
         }).catch((error) => {
             alert("You have not signed in: " + error);
         });
